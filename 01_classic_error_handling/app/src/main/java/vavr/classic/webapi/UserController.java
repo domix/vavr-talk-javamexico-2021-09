@@ -4,6 +4,7 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import lombok.RequiredArgsConstructor;
 import vavr.classic.service.UserManagementService;
+import vavr.classic.webapi.domain.AddUserCommand;
 
 import java.util.Objects;
 

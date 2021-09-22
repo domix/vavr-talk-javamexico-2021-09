@@ -1,6 +1,8 @@
 package vavr.classic.webapi;
 
 import vavr.classic.domain.User;
+import vavr.classic.webapi.domain.AddUserCommand;
+import vavr.classic.webapi.domain.UserDTO;
 
 public class UserWebApiMapper {
   public static User of(AddUserCommand command) {

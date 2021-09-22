@@ -1,4 +1,4 @@
-package vavr.classic.webapi;
+package vavr.classic.webapi.domain;
 
 public record AddUserCommand(
     String username,

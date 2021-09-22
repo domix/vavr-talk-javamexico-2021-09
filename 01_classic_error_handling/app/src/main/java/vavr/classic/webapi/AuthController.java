@@ -6,6 +6,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
 import lombok.RequiredArgsConstructor;
 import vavr.classic.service.AuthService;
+import vavr.classic.webapi.domain.LoginCommand;
 
 import java.util.Map;
 
