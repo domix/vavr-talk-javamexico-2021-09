@@ -4,7 +4,7 @@ import vavr.classic.domain.User;
 
 public class UserWebApiMapper {
   public static User of(AddUserCommand command) {
-    return new User(null, null, command.getUsername(), command.getPassword());
+    return new User(null, null, command.username(), command.password());
   }
 
   public static UserDTO of(User user) {
