@@ -8,6 +8,9 @@ import vavr.classic.domain.User;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Contract to perform database operations
+ */
 @JdbcRepository(dialect = Dialect.POSTGRES)
 public interface UserRepository extends CrudRepository<User, UUID> {
   Optional<User> findByUsernameAndPassword(String username, String password);
