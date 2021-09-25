@@ -4,6 +4,7 @@ import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import vavr.eh.domain.DuplicateEntity;
 import vavr.eh.domain.User;
 import vavr.eh.repository.UserRepository;
 import vavr.eh.service.UserManagementService;
@@ -21,6 +22,10 @@ public class DefaultUserManagementService implements UserManagementService {
   @NonNull
   @Override
   public User addUser(final @NonNull User user) {
+    //prevent duplicated users
+    if (userRepository.findByUsername(user.username()).isPresent()) {
+      throw DuplicateEntity.user(user.username());
+    }
     final var saved = userRepository.save(user);
     log.info("Added user with ID: {}", saved.id());
     return saved;
