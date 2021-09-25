@@ -19,8 +19,8 @@ import java.util.UUID;
  */
 @MappedEntity("people")
 public record User(
-    @Id @AutoPopulated @Nullable UUID id,
-    @DateCreated @Nullable Date dateCreated,
+    @Nullable @Id @AutoPopulated UUID id,
+    @Nullable @DateCreated Date dateCreated,
     @NonNull String username,
     @NonNull String password) {
 }

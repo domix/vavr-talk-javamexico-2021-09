@@ -14,7 +14,10 @@ public class DefaultAuthService implements AuthService {
   final private UserRepository userRepository;
 
   @Override
-  public boolean login(@NonNull String username, @NonNull String password) {
+  public boolean login(
+      final @NonNull String username,
+      final @NonNull String password
+  ) {
     return userRepository
         .findByUsernameAndPassword(username, password)
         .isPresent();

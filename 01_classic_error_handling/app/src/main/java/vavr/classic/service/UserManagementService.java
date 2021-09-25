@@ -16,7 +16,7 @@ public interface UserManagementService {
    * @return The {@link User} with all the database properties
    */
   @NonNull
-  User addUser(@NonNull User user);
+  User addUser(final @NonNull User user);
 
   /**
    * Search in the User catalog a user with the given id
@@ -25,5 +25,5 @@ public interface UserManagementService {
    * @return A non-empty {@link Optional} if found
    */
   @NonNull
-  Optional<User> findById(@NonNull String id);
+  Optional<User> findById(final @NonNull String id);
 }

@@ -1,5 +1,6 @@
 package vavr.eh.service.impl;
 
+import io.micronaut.core.annotation.NonNull;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,17 +15,20 @@ import java.util.UUID;
 @Singleton
 @RequiredArgsConstructor
 public class DefaultUserManagementService implements UserManagementService {
+  @NonNull
   private final UserRepository userRepository;
 
+  @NonNull
   @Override
-  public User addUser(User user) {
+  public User addUser(final @NonNull User user) {
     final var saved = userRepository.save(user);
-    log.info("Usuario guardado en: {}, con ID: {}", saved.dateCreated(), saved.id());
+    log.info("Added user with ID: {}", saved.id());
     return saved;
   }
 
+  @NonNull
   @Override
-  public Optional<User> findById(String id) {
+  public Optional<User> findById(final @NonNull String id) {
     final var uuid = UUID.fromString(id);
     return userRepository.findById(uuid);
   }
