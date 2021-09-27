@@ -43,7 +43,7 @@ public class UserController {
   }
 
   @NonNull
-  private MutableHttpResponse<Map<String, String>> userQueryFailure(Failure failure) {
+  private MutableHttpResponse<Map<String, String>> userQueryFailure(final @NonNull Failure failure) {
     log.warn("Failure found: {}", failure.getReason());
     final var body = Map.of(
         "message", failure.getReason()
@@ -52,18 +52,22 @@ public class UserController {
   }
 
   @NonNull
-  private HttpResponse<UserDTO> renderUser(User user) {
+  private HttpResponse<UserDTO> renderUser(final @NonNull User user) {
     return HttpResponse.ok(UserWebApiMapper.of(user));
   }
 
   @NonNull
-  private HttpResponse<UserDTO> savedUser(User saved) {
+  private HttpResponse<UserDTO> savedUser(final @NonNull User saved) {
     final var location = HttpResponse.uri("%s/%s".formatted(URI, saved.idAsString()));
     return HttpResponse.created(UserWebApiMapper.of(saved), location);
   }
 
   @NonNull
-  private HttpResponse<Map<String, String>> failureWhileSaving(Failure failure) {
+  private HttpResponse<Map<String, String>> failureWhileSaving(final @NonNull Failure failure) {
+    log.warn("Error while saving due: {}", failure.getReason());
+
+    failure.getCause().peek(throwable -> log.warn(throwable.getMessage(), throwable));
+
     final var body = Map.of(
         "message", failure.getReason()
     );

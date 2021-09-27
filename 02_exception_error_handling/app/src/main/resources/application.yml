@@ -9,6 +9,8 @@ datasources:
     password: secret
     schema-generate: NONE
     dialect: POSTGRES
+    connection-timeout: 500
+    max-lifetime: 500
 flyway:
   enabled: true
   datasources:

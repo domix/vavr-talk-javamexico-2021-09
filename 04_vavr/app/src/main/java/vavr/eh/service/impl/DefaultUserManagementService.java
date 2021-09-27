@@ -11,6 +11,7 @@ import vavr.eh.domain.User;
 import vavr.eh.repository.UserRepository;
 import vavr.eh.service.UserManagementService;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static vavr.eh.service.Failures.duplicatedUserResult;
@@ -29,10 +30,12 @@ public class DefaultUserManagementService implements UserManagementService {
   public Either<Failure, User> addUser(
       final @NonNull User user
   ) {
-    return userRepository
-        .findByUsername(user.username())
-        .map(this::handleExistingUser)
-        .orElseGet(() -> internalAddUser(user));
+    return Try.of(() -> userRepository.findByUsername(user.username()))
+        .toEither()
+        .mapLeft(Failure::of)
+        .filterOrElse(Optional::isEmpty, existingUser -> duplicatedUserResult(existingUser.get()))
+        .map(ignored -> internalAddUser(user))
+        .flatMap(result -> result);
   }
 
   @NonNull
