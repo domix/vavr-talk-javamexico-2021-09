@@ -74,11 +74,4 @@ public class DefaultUserManagementService implements UserManagementService {
         .mapLeft(Failure::of);
   }
 
-  @NonNull
-  private Either<Failure, User> handleExistingUser(
-      final @NonNull User existingUser
-  ) {
-    log.warn("The username '{}' already exists.", existingUser.username());
-    return Either.left(duplicatedUserResult(existingUser));
-  }
 }
