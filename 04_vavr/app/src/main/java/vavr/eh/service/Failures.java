@@ -13,9 +13,9 @@ public class Failures {
   }
 
   @NonNull
-  public static Failure userNotFound(final @NonNull String username) {
+  public static Failure userNotFound(final @NonNull String id) {
     return Failure.builder()
-        .reason("The user with username '%s' does not exist.".formatted(username))
+        .reason("The user with id '%s' does not exist.".formatted(id))
         .build();
   }
 

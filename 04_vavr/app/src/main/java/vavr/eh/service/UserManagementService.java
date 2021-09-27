@@ -27,7 +27,5 @@ public interface UserManagementService {
    * @return A non-empty {@link Optional} if found
    */
   @NonNull
-  Optional<User> findById(final @NonNull String id);
-
-
+  Either<Failure, User> findById(final @NonNull String id);
 }

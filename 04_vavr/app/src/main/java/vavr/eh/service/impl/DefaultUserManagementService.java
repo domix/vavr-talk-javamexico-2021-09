@@ -11,10 +11,11 @@ import vavr.eh.domain.User;
 import vavr.eh.repository.UserRepository;
 import vavr.eh.service.UserManagementService;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import static vavr.eh.service.Failures.duplicatedUserResult;
+import static vavr.eh.service.Failures.userNotFound;
+import static vavr.eh.util.Eithers.ofOptional;
 
 @Slf4j
 @Singleton
@@ -34,9 +35,13 @@ public class DefaultUserManagementService implements UserManagementService {
 
   @NonNull
   @Override
-  public Optional<User> findById(final @NonNull String id) {
+  public Either<Failure, User> findById(final @NonNull String id) {
     final var uuid = UUID.fromString(id);
-    return userRepository.findById(uuid);
+
+    return ofOptional(
+        () -> userRepository.findById(uuid),
+        () -> userNotFound(id)
+    );
   }
 
   @NonNull
