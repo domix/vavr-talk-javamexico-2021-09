@@ -26,7 +26,9 @@ public class DefaultUserManagementService implements UserManagementService {
 
   @NonNull
   @Override
-  public Either<Failure, User> addUser(final @NonNull User user) {
+  public Either<Failure, User> addUser(
+      final @NonNull User user
+  ) {
     return userRepository
         .findByUsername(user.username())
         .map(this::handleExistingUser)
@@ -35,7 +37,9 @@ public class DefaultUserManagementService implements UserManagementService {
 
   @NonNull
   @Override
-  public Either<Failure, User> findById(final @NonNull String id) {
+  public Either<Failure, User> getUserById(
+      final @NonNull String id
+  ) {
     final var uuid = UUID.fromString(id);
 
     return ofOptional(
@@ -44,8 +48,20 @@ public class DefaultUserManagementService implements UserManagementService {
     );
   }
 
+  @Override
+  public Either<Failure, User> getUserByUsername(
+      final @NonNull String username
+  ) {
+    return ofOptional(
+        () -> userRepository.findByUsername(username),
+        () -> userNotFound(username)
+    );
+  }
+
   @NonNull
-  private Either<Failure, User> internalAddUser(final @NonNull User user) {
+  private Either<Failure, User> internalAddUser(
+      final @NonNull User user
+  ) {
     log.info("Trying to add user {}", user.username());
 
     return Try.of(() -> userRepository.save(user))
@@ -56,7 +72,9 @@ public class DefaultUserManagementService implements UserManagementService {
   }
 
   @NonNull
-  private Either<Failure, User> handleExistingUser(final @NonNull User existingUser) {
+  private Either<Failure, User> handleExistingUser(
+      final @NonNull User existingUser
+  ) {
     log.warn("The username '{}' already exists.", existingUser.username());
     return Either.left(duplicatedUserResult(existingUser));
   }

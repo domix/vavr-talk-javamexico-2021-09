@@ -23,6 +23,7 @@ public class Eithers {
    * @param <T>      The expected returning type.
    * @return an instance ready to be used.
    */
+  @NonNull
   public static <T> Either<Throwable, T> withThrowable(CheckedFunction0<Optional<T>> supplier) {
     return Try.of(supplier::apply)
         .filter(Optional::isPresent)
@@ -30,6 +31,7 @@ public class Eithers {
         .toEither();
   }
 
+  @NonNull
   public static <T> Either<Failure, T> ofOptional(
       final @NonNull CheckedFunction0<Optional<T>> supplier,
       final @NonNull Supplier<Failure> leftSupplier
@@ -41,6 +43,7 @@ public class Eithers {
         .map(Optional::get);
   }
 
+  @NonNull
   public static <R> Either<Failure, R> ofOption(
       final @NonNull Option<Either<Failure, R>> option,
       final @NonNull Supplier<Failure> leftSupplier

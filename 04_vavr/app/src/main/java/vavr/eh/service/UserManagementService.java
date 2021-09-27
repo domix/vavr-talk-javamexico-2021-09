@@ -27,5 +27,8 @@ public interface UserManagementService {
    * @return A non-empty {@link Optional} if found
    */
   @NonNull
-  Either<Failure, User> findById(final @NonNull String id);
+  Either<Failure, User> getUserById(final @NonNull String id);
+
+  @NonNull
+  Either<Failure, User> getUserByUsername(final @NonNull String username);
 }

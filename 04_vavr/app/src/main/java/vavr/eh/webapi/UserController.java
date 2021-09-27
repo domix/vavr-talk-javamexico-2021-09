@@ -35,13 +35,14 @@ public class UserController {
   @NonNull
   @Get("/{id}")
   public HttpResponse<?> findById(final @NonNull @PathVariable String id) {
-    return userManagementService.findById(id)
+    return userManagementService.getUserById(id)
         .fold(
             this::userQueryFailure,
             this::renderUser
         );
   }
 
+  @NonNull
   private MutableHttpResponse<Map<String, String>> userQueryFailure(Failure failure) {
     log.warn("Failure found: {}", failure.getReason());
     final var body = Map.of(
@@ -50,15 +51,18 @@ public class UserController {
     return HttpResponse.notFound(body);
   }
 
+  @NonNull
   private HttpResponse<UserDTO> renderUser(User user) {
     return HttpResponse.ok(UserWebApiMapper.of(user));
   }
 
+  @NonNull
   private HttpResponse<UserDTO> savedUser(User saved) {
     final var location = HttpResponse.uri("%s/%s".formatted(URI, saved.idAsString()));
     return HttpResponse.created(UserWebApiMapper.of(saved), location);
   }
 
+  @NonNull
   private HttpResponse<Map<String, String>> failureWhileSaving(Failure failure) {
     final var body = Map.of(
         "message", failure.getReason()
